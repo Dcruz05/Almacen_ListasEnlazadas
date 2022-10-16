@@ -1,95 +1,69 @@
-class Inventario{
+class Almacen{
     constructor(){
-        this.productos=new Array();
+        this.primero=null;
     }
-
     agregar(producto){
-        let i = this.productos.length
-        if (i==0){
-            this.productos[i]=producto
-            return true
-        }
-        let buscar = this.buscar(producto.codigo)
-        if(buscar == null ){
-            while (this.productos[i-1]!=null&&producto.codigo < this.productos[i-1].codigo){
-                this.productos[i]= this.productos[i-1];
-                i--;
-            }
-            this.productos[i]=producto;
-            return true
+        if(this.primero==null){
+            this.primero=producto
         }else{
-            return false;
+            this.agregarSiguiente(producto,this.primero);
         }
     }
-
-    eliminar(codigo){
-        if(this.buscar(codigo)==null){
-            return false;
+    agregarSiguiente(producto,nodoX){
+        if(nodoX.siguiente==null){
+            nodoX.siguiente =producto
+        }else{
+            this.agregarSiguiente(producto,nodoX.siguiente)
         }
-        else{
-            for(let i=0;i<this.productos.length;i++){
-                if(codigo==this.productos[i].codigo){
-                    for(let j=i;j<this.productos.length-1;j++){
-                        this.productos[j]=this.productos[j+1];
-                    }
+    }
+    buscar(codigo){
+        let aux=this.primero
+        while(aux!=null){
+            if(aux.codigo==codigo){
+                return aux
+            }else{
+                aux=aux.siguiente;
+            }
+        }
+        return null;
+    }
+    eliminar(codigo){
+        let aux=this.primero
+        if(aux.codigo==codigo){
+            this.primero = aux.siguiente
+            return true;
+        }else{
+            let siguiente = null;
+            while(aux.siguiente!=null){
+                siguiente= aux.siguiente;
+                if(siguiente.codigo==codigo){
+                    aux.siguiente=aux.siguiente.siguiente
+                    return true;
+                }else{
+                    aux=aux.siguiente;
                 }
             }
-            this.productos.pop()
-            return true;
+            return false;
         }
     }
-
-    buscar(codigo){
-        let inicio = 0;
-        let fin = (this.productos.length) - 1;   
-        let resultado = null;
-        let encontrado = false;
-        let mitad;
-     
-        while ((encontrado === false) && (inicio <= fin)) {
-            mitad = Math.floor((inicio + fin)/2);
-            if (this.productos[mitad].codigo == codigo) {
-                encontrado = true;
-                resultado = this.productos[mitad];
-            } else if (this.productos[mitad].codigo > codigo) {
-                fin = mitad - 1;
-            } else {
-                inicio = mitad + 1;
-            }
+    listar(){
+        let lista="";
+        let aux=this.primero
+        while(aux!=null){
+            lista+=`${aux.info()}`
+            aux=aux.siguiente;
         }
-        return resultado;
+        return lista;
     }
-
-    mostrarBusqueda(resultado){
-        if(resultado!=null){
-            return `${resultado.infoHtml()}`
-        }else{
-            return null;
-        }
-    }
-
-    listado(){
+    listarInverso() {
         let lista = ""
-        if(this.productos.length>0){
-            for(let i=0;i<this.productos.length;i++){
-                lista += this.productos[i].infoHtml();
-            }
-        }else{
-            lista = "<p>No hay productos registrados</p>"
-        }
-        
+        lista = this.recorrerInverso(this.primero)
         return lista
     }
-
-    listadoInverso(){
-        let lista = ""
-        if(this.productos.length>0){
-            for(let i=this.productos.length-1;i>=0;i--){
-                lista += this.productos[i].infoHtml();
-            }
-        }else{
-            lista = "<p>No hay productos registrados</p>"
+    recorrerInverso(nodo){
+        if(nodo.siguiente==null){
+          return `${nodo.info()}`
         }
-        return lista
+        return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.info()}`
     }
 }
