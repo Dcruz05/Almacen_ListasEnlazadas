@@ -78,19 +78,25 @@ class Almacen{
         return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.infoHTML()}`
     }
     insertar(pos,nuevo){
+        if(this.buscar(nuevo.codigo)!=null)return NaN
         let aux = this.primero, cont = 1;
-        while(cont!=pos){
+        if(pos==1){
+            this.primero = nuevo;
+            nuevo.siguiente=aux;
+            return true
+        }
+        while(cont!=pos-1){
             if(aux.siguiente==null){
                 break;
             }
             aux = aux.siguiente
             cont++
         }
-        if(aux!=null&&cont==pos){
+        if(aux!=null&&cont==pos-1){
             nuevo.siguiente=aux.siguiente
             aux.siguiente=nuevo
             return true
-        }else if(cont==pos-1){
+        }else if(aux.siguiente==null&&cont==pos-1){
             aux.siguiente=nuevo
             return true
         }

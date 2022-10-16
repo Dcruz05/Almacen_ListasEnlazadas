@@ -47,6 +47,7 @@ btnEliminar.addEventListener("click", (e) => {
     }else document.getElementById("actividades").innerHTML +=`El producto que desea eliminar no existe<br>`
 });
 
+//Boton para buscar un registro por codigo
 const btnBuscar = document.getElementById("btnBuscar")
 btnBuscar.addEventListener("click", (e) => {
     const codigo = document.getElementById("schCodigo").value
@@ -58,3 +59,27 @@ btnBuscar.addEventListener("click", (e) => {
         document.getElementById("actividades").innerHTML +=`El codigo que desea buscar no existe<br>`
 })
 
+//Boton para insertar un registro en una determinada posicion
+const btnInsertar = document.getElementById("btnInsertar")
+btnInsertar.addEventListener("click", () =>{
+    document.getElementById("listado").innerHTML =``
+    const codigo = document.getElementById("codigo").value;
+    const nombre = document.getElementById("nombre").value;
+    const cantidad = document.getElementById("cantidad").value;
+    const precio = document.getElementById("precio").value;
+    const producto = new Producto(parseInt(codigo), nombre, cantidad, precio);
+    const pos = parseInt(document.getElementById("posicion").value);
+    if(producto.codigo>0&&pos>0){
+        const res = almacen.insertar(pos,producto)
+        if(res==true){
+            document.getElementById("actividades").innerHTML +=`Se agrego el producto con el codigo ${codigo} en la posicion ${pos}<br>`    
+        }
+        else if(res==false){
+            document.getElementById("actividades").innerHTML +=`La posicion ingresada sobrepasa el limite de productos<br>`
+        }
+        else{
+            document.getElementById("actividades").innerHTML +=`El producto ya existe<br>`
+        }
+    }else
+        document.getElementById("actividades").innerHTML +=`Falto ingresar un codigo o una posicion<br>`
+})
