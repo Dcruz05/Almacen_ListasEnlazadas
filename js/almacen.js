@@ -3,11 +3,15 @@ class Almacen{
         this.primero=null;
     }
     agregar(producto){
-        if(this.primero==null){
-            this.primero=producto
-        }else{
-            this.agregarSiguiente(producto,this.primero);
+        if(this.buscar(producto.codigo)==null){
+            if(this.primero==null){
+                this.primero=producto
+            }else{
+                this.agregarSiguiente(producto,this.primero);
+            }
+            return true;
         }
+        return false;
     }
     agregarSiguiente(producto,nodoX){
         if(nodoX.siguiente==null){
@@ -26,6 +30,13 @@ class Almacen{
             }
         }
         return null;
+    }
+    mostrarBusqueda(resultado){
+        if(resultado!=null){
+            return `${resultado.infoHTML()}`
+        }else{
+            return null;
+        }
     }
     eliminar(codigo){
         let aux=this.primero
@@ -50,7 +61,7 @@ class Almacen{
         let lista="";
         let aux=this.primero
         while(aux!=null){
-            lista+=`${aux.info()}`
+            lista+=`${aux.infoHTML()}`
             aux=aux.siguiente;
         }
         return lista;
@@ -62,8 +73,8 @@ class Almacen{
     }
     recorrerInverso(nodo){
         if(nodo.siguiente==null){
-          return `${nodo.info()}`
+          return `${nodo.infoHTML()}`
         }
-        return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.info()}`
+        return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.infoHTML()}`
     }
 }
