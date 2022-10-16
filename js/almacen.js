@@ -77,4 +77,23 @@ class Almacen{
         }
         return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.infoHTML()}`
     }
+    insertar(pos,nuevo){
+        let aux = this.primero, cont = 1;
+        while(cont!=pos){
+            if(aux.siguiente==null){
+                break;
+            }
+            aux = aux.siguiente
+            cont++
+        }
+        if(aux!=null&&cont==pos){
+            nuevo.siguiente=aux.siguiente
+            aux.siguiente=nuevo
+            return true
+        }else if(cont==pos-1){
+            aux.siguiente=nuevo
+            return true
+        }
+        return false
+    }
 }
