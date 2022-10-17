@@ -10,7 +10,7 @@ btnAgregar.addEventListener("click",(e)=>{
     const cantidad = document.getElementById("cantidad").value;
     const precio = document.getElementById("precio").value;
     const producto = new Producto(parseInt(codigo), nombre, cantidad, precio);
-    if (codigo=="") {
+    if (codigo==""||codigo<1) {
         document.getElementById("actividades").innerHTML += `No se agrego el producto, falta el codigo <br>`
     }else{
         respuesta = almacen.agregar(producto)

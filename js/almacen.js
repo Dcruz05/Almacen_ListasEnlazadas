@@ -57,17 +57,32 @@ class Almacen{
             return false;
         }
     }
+    listar() {
+        let lista = ""
+        if(this.primero==null){return lista="No hay productos en el almacen"}
+        lista = this.recorrer(this.primero)
+        return lista
+    }
+    /*
     listar(){
         let lista="";
+        if(this.primero==null){return lista="No hay productos en el almacen"}
         let aux=this.primero
         while(aux!=null){
             lista+=`${aux.infoHTML()}`
             aux=aux.siguiente;
         }
         return lista;
+    }*/
+    recorrer(nodo){
+        if(nodo.siguiente==null){
+          return `${nodo.infoHTML()}`
+        }
+        return `${nodo.infoHTML()}`+`${this.recorrer(nodo.siguiente)}`
     }
     listarInverso() {
         let lista = ""
+        if(this.primero==null){return lista="No hay productos en el almacen"}
         lista = this.recorrerInverso(this.primero)
         return lista
     }
@@ -78,7 +93,8 @@ class Almacen{
         return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.infoHTML()}`
     }
     insertar(pos,nuevo){
-        if(this.buscar(nuevo.codigo)!=null)return NaN
+        if(this.buscar(nuevo.codigo)!=null)return
+
         let aux = this.primero, cont = 1;
         if(pos==1){
             this.primero = nuevo;
