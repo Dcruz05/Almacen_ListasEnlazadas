@@ -63,17 +63,6 @@ class Almacen{
         lista = this.recorrer(this.primero)
         return lista
     }
-    /*
-    listar(){
-        let lista="";
-        if(this.primero==null){return lista="No hay productos en el almacen"}
-        let aux=this.primero
-        while(aux!=null){
-            lista+=`${aux.infoHTML()}`
-            aux=aux.siguiente;
-        }
-        return lista;
-    }*/
     recorrer(nodo){
         if(nodo.siguiente==null){
           return `${nodo.infoHTML()}`
