@@ -57,6 +57,7 @@ class Almacen{
             return false;
         }
     }
+
     listar() {
         let lista = ""
         if(this.primero==null){return lista="No hay productos en el almacen"}
@@ -69,6 +70,7 @@ class Almacen{
         }
         return `${nodo.infoHTML()}`+`${this.recorrer(nodo.siguiente)}`
     }
+
     listarInverso() {
         let lista = ""
         if(this.primero==null){return lista="No hay productos en el almacen"}
@@ -81,6 +83,7 @@ class Almacen{
         }
         return `${this.recorrerInverso(nodo.siguiente)}`+`${nodo.infoHTML()}`
     }
+    
     insertar(pos,nuevo){
         if(this.buscar(nuevo.codigo)!=null)return
 
